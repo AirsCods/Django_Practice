@@ -1,8 +1,9 @@
 from django.contrib import admin
 from django import forms
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django.utils.safestring import mark_safe
 
-from .models import *
+from .models import Post, Category, Tag
 
 
 class PostAdminForm(forms.ModelForm):
@@ -14,16 +15,72 @@ class PostAdminForm(forms.ModelForm):
 
 
 class PostAdmin(admin.ModelAdmin):
+    # Автоматическое заполнение поля slug из поля title
     prepopulated_fields = {'slug': ('title',)}
+    # Подключение формы с CKEditor
     form = PostAdminForm
+    # Кнопка сохранить как новый объект
+    save_as = True
+    # Положение кнопок дополнительно сверху
+    save_on_top = True
+    # Отображение атрибутов
+    list_display = (
+        'id',
+        'title',
+        'slug',
+        'category',
+        'created_at',
+        'get_photo',
+    )
+    # Атрибуты-ссылки
+    list_display_links = (
+        'id',
+        'title',
+    )
+    # Поиск по атрибуту
+    search_fields = ('category',)
+    # Поля только для чтения
+    readonly_fields = (
+        'views',
+        'created_at',
+        'get_photo',
+    )
+    # Поля внутри редактирования поста
+    fields = (
+        'title',
+        'slug',
+        'category',
+        'tags',
+        'content',
+        'photo',
+        'get_photo',
+        'views',
+        'created_at',
+    )
+
+    # Функция отображения фото объекта в админке
+    def get_photo(self, obj):
+        if obj.photo:
+            return mark_safe(f'<img src="{obj.photo.url}" width="120">')
+        else:
+            return '-'
+    get_photo.short_description = 'Фото'
 
 
 class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
+    list_display = (
+        'title',
+        'slug'
+    )
 
 
 class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
+    list_display = (
+        'title',
+        'slug'
+    )
 
 
 # Register your models here.

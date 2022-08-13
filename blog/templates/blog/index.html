@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+    {{ title }} :: {{ block.super }}
+{% endblock %}
 
 {% block content %}
 
@@ -16,6 +19,7 @@
                 </div>
             </div>
         </section>
+
 <section class="blog-post-area">
             <div class="container">
                 <div class="row">
@@ -34,99 +38,26 @@
                                     </div>
                                 </div>
                             </div>
+                            {% for post in posts %}
                             <div class="col-md-3">
                                 <div class="single-post">
-                                    <img src="{% static 'img/post-image2.jpg' %}" alt="">
-                                    <h3><a href="#">Post Title Goes Here.</a></h3>
-                                    <h4><span>Posted By: <span class="author-name">Kabbo Liate</span></span>
-                                    </h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dotempor incididunt ut. labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                    <h4><span>25 February 2017</span></h4>
+                                    {% if post.photo %}
+                                        <img src="{{ post.photo.url }}" alt="{{ posts.title }}">
+                                    {% else %}
+                                        <img src="https://picsum.photos/id/1084/300/201?grayscale" alt="{{ posts.title }}">
+                                    {% endif %}
+                                    <h3><a href="{{ post.get_absolute_url }}">{{ posts.title }}</a></h3>
+                                    <h4><span>Posted By: <span class="author-name">{{ post.author }}</span></span></h4>
+                                    <p>{{ post.content | safe | truncatewords_html:20 }}</p>
+                                    <h4><span>{{ post.created_at | date:"j E Y" }}</span></h4>
                                 </div>
                             </div>
-                            <div class="col-md-3">
-                                <div class="single-post">
-                                    <img src="{% static 'img/post-image3.jpg' %}" alt="">
-                                    <h3><a href="#">Post Title Goes Here.</a></h3>
-                                    <h4><span>Posted By: <span class="author-name">Kabbo Liate</span></span>
-                                    </h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dotempor incididunt ut. labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                    <h4><span>25 February 2017</span></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="single-post">
-                                   <img src="{% static 'img/post-image4.jpg' %}" alt="">
-                                    <h3><a href="#">Post Title Goes Here.</a></h3>
-                                    <h4><span>Posted By: <span class="author-name">Kabbo Liate</span></span>
-                                    </h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dotempor incididunt ut. labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                    <h4><span>25 February 2017</span></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="single-post">
-                                    <img src="{% static 'img/post-image5.jpg' %}" alt="">
-                                    <h3><a href="#">Post Title Goes Here.</a></h3>
-                                    <h4><span>Posted By: <span class="author-name">Kabbo Liate</span></span>
-                                    </h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dotempor incididunt ut. labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                    <h4><span>25 February 2017</span></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="single-post">
-                                    <img src="{% static 'img/post-image6.jpg' %}" alt="">
-                                    <h3><a href="#">Post Title Goes Here.</a></h3>
-                                    <h4><span>Posted By: <span class="author-name">Kabbo Liate</span></span>
-                                    </h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dotempor incididunt ut. labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                    <h4><span>25 February 2017</span></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="single-post">
-                                    <img src="{% static 'img/post-image7.jpg' %}" alt="">
-                                    <h3><a href="#">Post Title Goes Here.</a></h3>
-                                    <h4><span>Posted By: <span class="author-name">Kabbo Liate</span></span>
-                                    </h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dotempor incididunt ut. labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                    <h4><span>25 February 2017</span></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="single-post">
-                                    <img src="{% static 'img/post-image8.jpg' %}" alt="">
-                                    <h3><a href="#">Post Title Goes Here.</a></h3>
-                                    <h4><span>Posted By: <span class="author-name">Kabbo Liate</span></span>
-                                    </h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dotempor incididunt ut. labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                    <h4><span>25 February 2017</span></h4>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="single-post">
-                                    <img src="{% static 'img/post-image9.jpg' %}" alt="">
-                                    <h3><a href="#">Post Title Goes Here.</a></h3>
-                                    <h4><span>Posted By: <span class="author-name">Kabbo Liate</span></span>
-                                    </h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed dotempor incididunt ut. labore et dolore magna aliqua. Ut enim ad minim veniam</p>
-                                    <h4><span>25 February 2017</span></h4>
-                                </div>
-                            </div>
+                        {% endfor %}
+
                     </div>
                 </div>
             </div>
-            <div class="pegination">
-                <div class="nav-links">
-                    <span class="page-numbers current">1</span>
-                    <a class="page-numbers" href="#">2</a>
-                    <a class="page-numbers" href="#">3</a>
-                    <a class="page-numbers" href="#">4</a>
-                    <a class="page-numbers" href="#">5</a>
-                    <a class="page-numbers" href="#"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                </div>
-            </div>
+            {% include 'inc/_pagin.html' %}
         </section>
 
 {% endblock %}
