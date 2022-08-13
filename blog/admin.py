@@ -39,6 +39,11 @@ class PostAdmin(admin.ModelAdmin):
     )
     # Поиск по атрибуту
     search_fields = ('category',)
+    # Окно фильтра
+    list_filter = [
+        'category',
+        'tags',
+    ]
     # Поля только для чтения
     readonly_fields = (
         'views',

@@ -46,7 +46,7 @@
                                     {% else %}
                                         <img src="https://picsum.photos/id/1084/300/201?grayscale" alt="{{ posts.title }}">
                                     {% endif %}
-                                    <h3><a href="{{ post.get_absolute_url }}">{{ posts.title }}</a></h3>
+                                    <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
                                     <h4><span>Posted By: <span class="author-name">{{ post.author }}</span></span></h4>
                                     <p>{{ post.content | safe | truncatewords_html:20 }}</p>
                                     <h4><span>{{ post.created_at | date:"j E Y" }}</span></h4>
